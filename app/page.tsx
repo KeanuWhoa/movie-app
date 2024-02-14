@@ -16,6 +16,7 @@ async function getTrendingToday() {
 }
 
 // returns image sizes [no idea how long this remains the same, leaving this here in case ever need to ping again]
+// we don't want to ping this constantly; maybe once a week?
 async function getConfig() {
     const response = await fetch("https://api.themoviedb.org/3/configuration", {
         method: "GET",
@@ -25,6 +26,16 @@ async function getConfig() {
         }
     });
     return response.json();
+}
+
+function sortByProperty(a: any, b: any, property: any){
+    if (a.property > b.property) {
+        return -1;
+    }
+    if (a.property < b.property) {
+        return 1;
+    }
+    return 0;
 }
 
 function sortDates(a: any, b: any) {
@@ -51,6 +62,8 @@ export default async function Home() {
     const trendingTodayJSON = await getTrendingToday();
     const trendingTodayItems = trendingTodayJSON.results;
     let trendingTodaySorted = trendingTodayItems.sort(sortPopularity);
+
+    console.log(trendingTodaySorted);
 
     const featuredMedia = trendingTodaySorted[0];
     trendingTodaySorted.splice(0, 1);
@@ -80,7 +93,7 @@ export default async function Home() {
         <>
             <section className="banner">
                 <div className="banner__details">
-                    <h1>{featuredMedia.title}</h1>
+                    <h1>{featuredMedia.title ? featuredMedia.title : featuredMedia.name}</h1>
                     <p>{featuredMedia.overview}</p>
                 </div>
                 <div className="banner__background">
