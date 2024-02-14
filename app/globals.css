@@ -1,27 +1,234 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    background-color: #1a1625;
+    color: rgba(255, 255, 255, .85);
+    width: 100%;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 500;
+    margin: 0;
+}
+
+p {
+    margin: 0 0 18px 0;
+    padding: 0;
+}
+
+p:last-of-type {
+    margin-bottom: 0;
+}
+
+h2 > a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ----- Main Sections ----- */
+
+.header--main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 25px;
+    padding-inline: 50px;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+
+    & nav {
+        display: flex;
+        gap: 10px;
+
+        & a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+    }
+}
+
+.section--main {
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    padding-inline: 50px;
+    padding-block: 50px;
+    z-index: 10;
+}
+
+.section--trending {
+    margin-top: -150px;
+    padding-top: 0;
+}
+
+.section__header {
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+.banner {
+    width: 100%;
+    aspect-ratio: 1.778 / 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 18%;
+    position: relative;
+    overflow: hidden;
+
+    &:after {
+        content: '';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(transparent, rgba(15, 15, 15, .85));
+    }
+
+    & .banner__details {
+        position: relative;
+        z-index: 1;
+        margin-top: auto;
+        max-width: 850px;
+        padding-inline: 50px;
+
+        & h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        & p {
+            font-size: 18px;
+            font-weight: 400;
+        }
+    }
+
+    & .banner__background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        isolation: isolate;
+        background-color: #1a1625;
+
+        & .background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+            background-position: center;
+            background-size: cover;
+            z-index: 0;
+
+            &:after {
+                content: '';
+                width: 100%;
+                height: 25%;
+                position: absolute;
+                bottom: 0;
+            }
+
+            &.blur {
+                filter: blur(50px);
+            }
+        }
+    }
+}
+
+/* ----- Utility ----- */
+
+.fw-400 {
+    font-weight: 400;
+}
+
+/* ----- List View ----- */
+
+.movies {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: 1fr;
+    column-gap: 25px;
+    row-gap: 50px;
+}
+
+.movie {
+    width: minmax(200px, 300px);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.movie__poster {
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    width: 100%;
+
+    &:after {
+        content: '';
+        height: 0;
+        width: 0;
+        padding-bottom: 56.25%;
+        display: block;
+        position: relative;
+    }
+
+    & .poster {
+        width: 101%;
+        height: 101%;
+        position: absolute;
+        inset: 0;
+        background-position: center;
+        background-size: cover;
+    }
+}
+
+.movie__stars {
+    display: flex;
+    gap: 5px;
+}
+
+/* ----- Icons ----- */
+.star {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        background-color: green;
+    }
+}
+
+.star--partial:after {
+    height: var(--percentage);
 }
